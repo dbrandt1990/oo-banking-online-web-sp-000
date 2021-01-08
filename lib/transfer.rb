@@ -16,7 +16,7 @@ class Transfer
     sufficient_funds = @sender.balance > @amount ? true : false
     not_rejected =  self.status == "pending" ? true : false
     
-    if sufficient_funds && valid? && not_rejected
+    if valid? && sufficient_funds && not_rejected
       @sender.deposit(-@amount)
       @receiver.deposit(@amount)
       @status = "complete"
