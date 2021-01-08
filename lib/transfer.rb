@@ -13,7 +13,7 @@ class Transfer
   end
   
   def execute_transaction
-    if @sender.balance - @amount >= 0 
+    if @sender.balance - @amount >= 0 && @status != "complete"
       @sender.deposit(-@amount)
       @receiver.deposit(@amount)
       @status = "complete"
