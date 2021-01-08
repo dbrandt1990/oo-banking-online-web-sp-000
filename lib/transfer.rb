@@ -9,14 +9,15 @@ class Transfer
   end
   
   def valid?
-    @sender.valid? && @receiver.valid? ? true : false
+    accounts_valid = @sender.valid? && @receiver.valid? ? true : false
+    sufficient_funds = @sender.balance > @amount ? true : false
+    accounts_valid && sufficient_funds ? true :false
   end
   
   def execute_transaction
-    sufficient_funds = @sender.balance > @amount ? true : false
     not_rejected =  self.status == "pending" ? true : false
     
-    if valid? && sufficient_funds && not_rejected
+    if valid?  && not_rejected
       @sender.deposit(-@amount)
       @receiver.deposit(@amount)
       @status = "complete"
