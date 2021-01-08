@@ -14,9 +14,9 @@ class Transfer
   
   def execute_transaction
     sufficient_funds = @sender.balance > @amount ? true : false
-    account_open = @sender.status == "open" && @receiver.status == "open" ? true : false
     not_rejected =  self.status == "pending" ? true : false
-    if sufficient_funds && account_open && not_rejected
+    
+    if sufficient_funds && valid? && not_rejected
       @sender.deposit(-@amount)
       @receiver.deposit(@amount)
       @status = "complete"
